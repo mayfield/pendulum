@@ -84,7 +84,7 @@ class PendulumInterval(timedelta):
 
         :rtype: bool
         """
-        if not cls.translator().register_resource(locale):
+        if not cls.translator().load_translations(locale):
             return False
 
         cls.translator().locale = locale

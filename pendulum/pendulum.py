@@ -847,29 +847,12 @@ class Pendulum(datetime.datetime):
 
         :rtype: bool
         """
-        locale = cls.format_locale(locale)
-        if not cls.translator().register_resource(locale):
+        if not cls.translator().load_translations(locale):
             return False
 
         cls.translator().locale = locale
 
         return True
-
-    @classmethod
-    def format_locale(cls, locale):
-        """
-        Properly format locale.
-
-        :param locale: The locale
-        :type locale: str
-
-        :rtype: str
-        """
-        m = re.match('([a-z]{2})[-_]([a-z]{2})', locale, re.I)
-        if m:
-            return '{}_{}'.format(m.group(1).lower(), m.group(2).lower())
-        else:
-            return locale.lower()
 
     # String Formatting
 
@@ -1894,9 +1877,6 @@ class Pendulum(datetime.datetime):
 
         if count == 0:
             count = 1
-
-        if locale:
-            locale = self.format_locale(locale)
 
         time = self.translator().transchoice(unit, count, {'count': count}, locale=locale)
 
